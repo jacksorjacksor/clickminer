@@ -26,18 +26,61 @@ body {
 .square {
   height: 88px;
   width: 88px;
-  background-color: burlywood;
-
+  /* background-color: green; */
   margin: 3px;
 }
 
-.square:hover:not(.wall) {
+.dad {
+  height: 1000px;
+}
+
+.square:hover:not([class*='wall']) {
   background-color: lightblue;
   transform: scale(1.1);
 }
 /* Visible conditions */
-.wall {
+/* [class*='wall'] {
+  background-color: green;
+} */
+
+.wall0,
+.level0 {
+  background-color: green;
+}
+
+.wall1,
+.level1 {
+  background-color: yellow;
+}
+
+.wall2,
+.level2 {
+  background-color: orange;
+}
+
+.wall3,
+.level3 {
+  background-color: red;
+}
+
+.wall4,
+.level4 {
+  background-color: blue;
+}
+
+.wall5,
+.level5 {
+  background-color: purple;
+}
+
+.wall6,
+.level6 {
   background-color: brown;
+}
+
+.wall7,
+.level7 {
+  background-color: gold;
 }
 
 /* Hidden/added conditions */
@@ -47,4 +90,11 @@ body {
 }
 .lose {
   background-color: black;
+}
+.arrow {
+  color: white;
+}
+
+.arrow.nearLose {
+  color: red;
 }
