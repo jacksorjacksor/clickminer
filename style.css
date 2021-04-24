@@ -1,0 +1,50 @@
+/* Boilerplate */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f9fafb;
+  font-family: 'Open Sans', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.container {
+  margin: 80px;
+}
+
+.row {
+  display: flex;
+}
+
+/* Square  */
+.square {
+  height: 88px;
+  width: 88px;
+  background-color: burlywood;
+
+  margin: 3px;
+}
+
+.square:hover:not(.wall) {
+  background-color: lightblue;
+  transform: scale(1.1);
+}
+/* Visible conditions */
+.wall {
+  background-color: brown;
+}
+
+/* Hidden/added conditions */
+.win {
+  /* This will flash then be refreshed */
+  background-color: chartreuse;
+}
+.lose {
+  background-color: black;
+}
