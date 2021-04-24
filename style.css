@@ -26,22 +26,13 @@ body {
 .square {
   height: 88px;
   width: 88px;
-  /* background-color: green; */
   margin: 3px;
-}
-
-.dad {
-  height: 1000px;
 }
 
 .square:hover:not([class*='wall']) {
   transform: scale(1.1);
 }
 /* Visible conditions */
-/* [class*='wall'] {
-  background-color: green;
-} */
-
 .wall1,
 .level0 {
   background-color: green;
@@ -83,17 +74,35 @@ body {
 }
 
 /* Hidden/added conditions */
-.win {
-  /* This will flash then be refreshed */
+/* .win {
   background-color: chartreuse;
-}
-.lose {
-  background-color: black;
-}
+} */
+
 .arrow {
   color: white;
 }
 
-.arrow.nearLose {
-  color: red;
+.north {
+  rotate: 0deg;
+}
+.northEast {
+  rotate: 45deg;
+}
+.east {
+  rotate: 90deg;
+}
+.southEast {
+  rotate: 135deg;
+}
+.south {
+  rotate: 180deg;
+}
+.southWest {
+  rotate: 225deg;
+}
+.west {
+  rotate: 270deg;
+}
+.northWest {
+  rotate: 315deg;
 }
