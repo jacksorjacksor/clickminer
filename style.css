@@ -35,7 +35,6 @@ body {
 }
 
 .square:hover:not([class*='wall']) {
-  background-color: lightblue;
   transform: scale(1.1);
 }
 /* Visible conditions */
@@ -43,42 +42,42 @@ body {
   background-color: green;
 } */
 
-.wall0,
+.wall1,
 .level0 {
   background-color: green;
 }
 
-.wall1,
+.wall2,
 .level1 {
   background-color: yellow;
 }
 
-.wall2,
+.wall3,
 .level2 {
   background-color: orange;
 }
 
-.wall3,
+.wall4,
 .level3 {
   background-color: red;
 }
 
-.wall4,
+.wall5,
 .level4 {
   background-color: blue;
 }
 
-.wall5,
+.wall6,
 .level5 {
   background-color: purple;
 }
 
-.wall6,
+.wall7,
 .level6 {
   background-color: brown;
 }
 
-.wall7,
+.wall8,
 .level7 {
   background-color: gold;
 }

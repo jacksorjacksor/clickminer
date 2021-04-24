@@ -1,24 +1,10 @@
 // Define variables
 const container = document.querySelector('.container');
 var level = 0;
-var walls = setWalls();
 var squares = document.querySelectorAll(".square:not([class*='wall'])");
-
-function setWalls(wallRow, wallCol) {
-  console.log('SetWalls - Level: ' + level);
-  // This'll be the hard part!!!
-  let wallReference = '.row' + wallRow + ', .col' + wallCol;
-  let walls = document.querySelectorAll(wallReference);
-  // let walls = document.querySelectorAll('.row1, .col1');
-  walls.forEach((e) => {
-    e.classList.add('wall' + level);
-  });
-  return walls;
-}
 
 function setWin() {
   // Pick a random item from a collection
-  console.log('SetWin - Level: ' + level);
   let squares = document.querySelectorAll(".square:not([class*='wall'])");
 
   squares.forEach((square) => {
@@ -30,19 +16,46 @@ function setWin() {
   return winningSquare;
 }
 
-// function setLose() {
-//   let squaresWithoutWin = document.querySelectorAll(
-//     ".square:not([class*='wall']):not(.win)"
-//   );
-//   let losingSquare =
-//     squaresWithoutWin[Math.floor(Math.random() * squaresWithoutWin.length)];
-//   losingSquare.classList.add('lose');
-//   return losingSquare;
-// }
+leftWallIndex = 0;
+rightWallIndex = 9;
+topWallIndex = 0;
+bottomWallIndex = 9;
 
-function resetBoard() {
-  document.querySelector('.win').classList.remove('win');
-  // document.querySelector('.lose').classList.remove('lose');
+function setWalls(startingRow, startingCol) {
+  // Check if which walls are furthest way from the win and bring their walls closer
+  if (
+    Math.abs(startingCol - leftWallIndex) <
+    Math.abs(startingCol - rightWallIndex)
+  ) {
+    rightWallIndex -= 1;
+    wallCol = rightWallIndex;
+  } else {
+    leftWallIndex += 1;
+    wallCol = leftWallIndex;
+  }
+
+  if (
+    Math.abs(startingRow - topWallIndex) <
+    Math.abs(startingRow - bottomWallIndex)
+  ) {
+    bottomWallIndex -= 1;
+    wallRow = bottomWallIndex;
+  } else {
+    topWallIndex += 1;
+    wallRow = topWallIndex;
+  }
+
+  wallReference = '.row' + wallRow + ', .col' + wallCol;
+
+  walls = document.querySelectorAll(wallReference);
+
+  walls.forEach((e) => {
+    // IF there isn't a list already
+    if (!e.classList.contains('wallGeneric')) {
+      e.classList.add('wallGeneric'); // just checking if there's a wall
+      e.classList.add('wall' + level);
+    }
+  });
 }
 
 function winLevel(winSquare) {
@@ -58,8 +71,10 @@ function winLevel(winSquare) {
   });
   // workout where the win was
   setWalls(winRow, winCol);
-  resetBoard();
-  initialiser();
+  document.querySelector('.win').classList.remove('win');
+  // document.querySelector('.lose').classList.remove('lose');
+  var winSquare = setWin();
+  //   var loseSquare = setLose();
 }
 
 function initialiser() {
@@ -71,8 +86,22 @@ function initialiser() {
 container.addEventListener('click', (e) => {
   console.log(e.target);
   if (e.target.classList.contains('win')) {
-    winLevel(e.target);
+    if (level < 6) {
+      winLevel(e.target);
+    } else {
+      console.log('YOU WIN!!!');
+    }
   }
 });
 // Run the scripts
 initialiser();
+
+// function setLose() {
+//   let squaresWithoutWin = document.querySelectorAll(
+//     ".square:not([class*='wall']):not(.win)"
+//   );
+//   let losingSquare =
+//     squaresWithoutWin[Math.floor(Math.random() * squaresWithoutWin.length)];
+//   losingSquare.classList.add('lose');
+//   return losingSquare;
+// }
