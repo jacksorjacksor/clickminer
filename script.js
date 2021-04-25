@@ -1,6 +1,16 @@
 // Define variables
 container = document.querySelector('.container');
-level = 0;
+
+levelCounter = document.querySelector('.levelCounter');
+level = 1;
+
+moveCounter = document.querySelector('.moveCounter');
+move = 0;
+
+winText = document.querySelector('.winText');
+
+gameOver = false;
+
 leftWallIndex = 0;
 rightWallIndex = 9;
 topWallIndex = 0;
@@ -19,9 +29,19 @@ function setWin() {
   winningSquare = squares[Math.floor(Math.random() * squares.length)];
 
   winningSquare.classList.add('win');
+
+  winningSquare.classList.forEach((e) => {
+    if (e.startsWith('row')) {
+      winRow = e.slice(3);
+    }
+    if (e.startsWith('col')) {
+      winCol = e.slice(3);
+    }
+  });
 }
 
 function setWalls(startingRow, startingCol) {
+  console.log('here');
   // Check if which walls are furthest way from the win and bring their walls closer
   if (
     Math.abs(startingCol - leftWallIndex) <
@@ -59,46 +79,78 @@ function setWalls(startingRow, startingCol) {
 }
 
 function winLevel() {
-  arrowSquares = document.querySelectorAll('.arrow');
-  arrowSquares.forEach((e) => {
-    e.classList.remove('arrow');
-    e.innerHTML = '';
+  document.querySelectorAll('.arrow').forEach((e) => {
+    e.remove();
   });
 
   level += 1;
+  levelCounter.innerHTML = level;
   // This works if we keep the IDs correct!
-  winningSquare.classList.forEach((e) => {
-    if (e.startsWith('row')) {
-      winRow = e.slice(3);
-    }
-    if (e.startsWith('col')) {
-      winCol = e.slice(3);
-    }
-  });
+
   setWalls(winRow, winCol);
   document.querySelector('.win').classList.remove('win');
-  setWin();
+  if (level < 8) {
+    setWin();
+  } else {
+    console.log('YOU WIN!!!');
+    endOfGame();
+  }
+}
+
+function endOfGame() {
+  winningSquare.classList.add('finalSquare');
+  container.classList.add('winContainer');
+  winText.classList.add('winTextVisible');
+  gameOver = true;
 }
 
 // Event Listener
 container.addEventListener('click', (e) => {
-  console.log(e.target);
-  if (e.target.classList.contains('win')) {
-    if (level < 6) {
+  if (!gameOver) {
+    move += 1;
+    moveCounter.innerHTML = move;
+
+    console.log(e.target);
+    if (e.target.classList.contains('win')) {
       winLevel();
-    } else {
-      console.log('YOU WIN!!!');
+    } else if (
+      e.target.classList.contains('square') &
+      !e.target.classList.contains('wallGeneric') &
+      (e.target.children.length === 0)
+    ) {
+      e.target.innerHTML = '<p class="arrow">></p>';
+      arrowFindTheTreasure(e);
     }
-  } else if (
-    e.target.classList.contains('square') &
-    !e.target.classList.contains('wallGeneric')
-  ) {
-    e.target.classList.add('arrow');
-    e.target.innerHTML = '^';
-    arrowFindTheTreasure(e);
   }
 });
 
 function arrowFindTheTreasure(e) {
-  e.target.classList.add('east');
+  e.target.classList.forEach((e) => {
+    if (e.startsWith('row')) {
+      arrowRow = e.slice(3);
+    }
+    if (e.startsWith('col')) {
+      arrowCol = e.slice(3);
+    }
+  });
+  diffRow = arrowRow - winRow;
+  diffCol = arrowCol - winCol;
+
+  if (diffRow > 0) {
+    direction = 'north';
+  } else if (diffRow < 0) {
+    direction = 'south';
+  } else {
+    direction = '';
+  }
+
+  if (diffCol < 0) {
+    direction += 'east';
+  } else if (diffCol > 0) {
+    direction += 'west';
+  } else {
+    direction += '';
+  }
+
+  e.target.children[0].classList.add(direction);
 }

@@ -15,61 +15,79 @@ body {
 }
 
 .container {
-  margin: 80px;
+  margin: 10px;
+  border: 10px solid white;
 }
 
 .row {
   display: flex;
 }
 
+.scoreElement {
+  margin: 10px 10px 0 10px;
+}
 /* Square  */
 .square {
   height: 88px;
   width: 88px;
   margin: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.square:hover:not([class*='wall']) {
+.winText {
+  font-size: 250%;
+  visibility: hidden;
+  color: gold;
+}
+
+.winTextVisible {
+  visibility: visible;
+}
+
+.square:hover:not([class*='wall'], .finalSquare) {
   transform: scale(1.1);
 }
 /* Visible conditions */
-.wall1,
-.level0 {
-  background-color: green;
-}
-
 .wall2,
 .level1 {
-  background-color: yellow;
+  background-color: green;
 }
 
 .wall3,
 .level2 {
-  background-color: orange;
+  background-color: darkslateblue;
 }
 
 .wall4,
 .level3 {
-  background-color: red;
+  background-color: orange;
 }
 
 .wall5,
 .level4 {
-  background-color: blue;
+  background-color: red;
 }
 
 .wall6,
 .level5 {
-  background-color: purple;
+  background-color: blue;
 }
 
 .wall7,
 .level6 {
-  background-color: brown;
+  background-color: purple;
 }
 
 .wall8,
 .level7 {
+  background-color: brown;
+}
+
+.wall9,
+.level8,
+.finalSquare {
   background-color: gold;
 }
 
@@ -80,29 +98,34 @@ body {
 
 .arrow {
   color: white;
+  font-size: 88px;
 }
 
 .north {
-  rotate: 0deg;
+  rotate: -90deg;
 }
-.northEast {
-  rotate: 45deg;
+.northeast {
+  rotate: -45deg;
 }
 .east {
-  rotate: 90deg;
+  rotate: 0deg;
 }
-.southEast {
-  rotate: 135deg;
+.southeast {
+  rotate: 45deg;
 }
 .south {
-  rotate: 180deg;
+  rotate: 90deg;
 }
-.southWest {
-  rotate: 225deg;
+.southwest {
+  rotate: 135deg;
 }
 .west {
-  rotate: 270deg;
+  rotate: 180deg;
 }
-.northWest {
-  rotate: 315deg;
+.northwest {
+  rotate: 225deg;
+}
+
+.winContainer {
+  border: 10px solid gold;
 }

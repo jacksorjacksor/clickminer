@@ -8,8 +8,18 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <h1>LD48 | DEEPER AND DEEPER</h1>
-    <em>A top-down mining game</em>
+    <h1>LD48 | CLICK MINING</h1>
+    <em></em>
+    <div class="scores" style="display: flex">
+      <div class="level scoreElement">
+        Level <span class="levelCounter">1</span>
+      </div>
+      <div class="moves scoreElement">
+        Moves: <span class="moveCounter">0</span>
+      </div>
+      <button class="scoreElement" onclick="location.reload()">Restart</button>
+    </div>
+    <div class="scoreElement winText"><span>YOU WIN!</span></div>
     <div class="container">
       <div class="row">
         <div class="square row1 col1"></div>
