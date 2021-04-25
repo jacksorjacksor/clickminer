@@ -105,35 +105,35 @@ h1 {
 }
 
 .north {
-  rotate: -90deg;
+  transform: rotate(-90deg);
 }
 .northeast {
-  rotate: -45deg;
+  transform: rotate(-45deg);
 }
 .east {
-  rotate: 0deg;
+  transform: rotate(0deg);
 }
 .southeast {
-  rotate: 45deg;
+  transform: rotate(45deg);
 }
 .south {
-  rotate: 90deg;
+  transform: rotate(90deg);
 }
 .southwest {
-  rotate: 135deg;
+  transform: rotate(135deg);
 }
 .west {
-  rotate: 180deg;
+  transform: rotate(180deg);
 }
 .northwest {
-  rotate: 225deg;
+  transform: rotate(225deg);
 }
 
 .winContainer {
   border: 10px solid gold;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 800px), (max-height: 950px) {
   .square {
     height: 40px;
     width: 40px;
@@ -143,5 +143,9 @@ h1 {
   .arrow {
     color: white;
     font-size: 40px;
+  }
+
+  .square:hover:not([class*='wall'], .finalSquare) {
+    transform: scale(1);
   }
 }
