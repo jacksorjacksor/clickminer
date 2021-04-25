@@ -99,11 +99,6 @@ h1 {
   background-color: gold;
 }
 
-/* Hidden/added conditions */
-/* .win {
-  background-color: chartreuse;
-} */
-
 .arrow {
   color: white;
   font-size: 88px;
@@ -136,4 +131,17 @@ h1 {
 
 .winContainer {
   border: 10px solid gold;
+}
+
+@media (max-width: 800px) {
+  .square {
+    height: 40px;
+    width: 40px;
+    margin: 1px;
+  }
+
+  .arrow {
+    color: white;
+    font-size: 40px;
+  }
 }
