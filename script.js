@@ -1,5 +1,6 @@
 // Define variables
 container = document.querySelector('.container');
+restartButton = document.querySelector('.restartButton');
 
 levelCounter = document.querySelector('.levelCounter');
 level = 1;
@@ -16,7 +17,47 @@ rightWallIndex = 9;
 topWallIndex = 0;
 bottomWallIndex = 9;
 
+// Define Sound Elements
+var audioMusic = document.createElement('audio');
+audioMusic.src = 'audio/music.ogg';
+audioMusic.loop = true;
+
+var audioLevelCompleted = document.createElement('audio');
+
+var audioShovel = document.createElement('audio');
+audioShovel.src = 'audio/shovel.ogg';
+audioShovel.volume = 0.2;
+
+var audioYouWin = document.createElement('audio');
+audioYouWin.src = 'audio/youWin.ogg';
+
+// Start the game!
 setWin();
+
+function reloadTheGame() {
+  // Doesn't quite work
+  console.log('HI!!!');
+  level = 1;
+  move = 0;
+  leftWallIndex = 0;
+  rightWallIndex = 9;
+  topWallIndex = 0;
+  bottomWallIndex = 9;
+
+  squares = document.querySelectorAll("[class*='wall']");
+
+  squares.forEach((square) => {
+    square.classList.remove("[class*='wall']");
+  });
+
+  setWin();
+}
+
+function playLevelCompleted() {
+  levelForAudio = level - 1;
+  audioLevelCompleted.src = 'audio/win' + levelForAudio + '.ogg';
+  audioLevelCompleted.play();
+}
 
 function setWin() {
   // Pick a random item from a collection
@@ -90,14 +131,15 @@ function winLevel() {
   setWalls(winRow, winCol);
   document.querySelector('.win').classList.remove('win');
   if (level < 8) {
+    playLevelCompleted();
     setWin();
   } else {
-    console.log('YOU WIN!!!');
     endOfGame();
   }
 }
 
 function endOfGame() {
+  audioYouWin.play();
   winningSquare.classList.add('finalSquare');
   container.classList.add('winContainer');
   winText.classList.add('winTextVisible');
@@ -106,6 +148,7 @@ function endOfGame() {
 
 // Event Listener
 container.addEventListener('click', (e) => {
+  audioMusic.play();
   if (!gameOver) {
     move += 1;
     moveCounter.innerHTML = move;
@@ -118,10 +161,15 @@ container.addEventListener('click', (e) => {
       !e.target.classList.contains('wallGeneric') &
       (e.target.children.length === 0)
     ) {
+      audioShovel.play();
       e.target.innerHTML = '<p class="arrow">></p>';
       arrowFindTheTreasure(e);
     }
   }
+});
+
+restartButton.addEventListener('click', (e) => {
+  reloadTheGame();
 });
 
 function arrowFindTheTreasure(e) {
