@@ -1,6 +1,8 @@
 // Define variables
+
 container = document.querySelector('.container');
 restartButton = document.querySelector('.restartButton');
+muteButton = document.querySelector('.muteButton');
 
 levelCounter = document.querySelector('.levelCounter');
 level = 1;
@@ -11,11 +13,14 @@ move = 0;
 winText = document.querySelector('.winText');
 
 gameOver = false;
+soundMuted = false;
 
 leftWallIndex = 0;
 rightWallIndex = 9;
 topWallIndex = 0;
 bottomWallIndex = 9;
+
+winText.innerHTML = '(music starts when you click a green box)';
 
 // Define Sound Elements
 var audioMusic = document.createElement('audio');
@@ -31,23 +36,85 @@ audioShovel.volume = 0.2;
 var audioYouWin = document.createElement('audio');
 audioYouWin.src = 'audio/youWin.ogg';
 
+function setGameAudioVolume() {
+  if (!soundMuted) {
+    audioMusic.volume = 1;
+    audioShovel.volume = 0.2;
+    audioLevelCompleted.volume = 1;
+    audioYouWin.volume = 1;
+    muteButton.innerHTML = 'Mute';
+  } else {
+    audioMusic.volume = 0;
+    audioShovel.volume = 0;
+    audioLevelCompleted.volume = 0;
+    audioYouWin.volume = 0;
+    muteButton.innerHTML = 'Unmute';
+  }
+}
+
+muteButton.addEventListener('click', (e) => {
+  soundMuted = !soundMuted;
+  setGameAudioVolume();
+});
+
 // Start the game!
+
 setWin();
 
 function reloadTheGame() {
-  // Doesn't quite work
-  console.log('HI!!!');
+  gameOver = false;
+
   level = 1;
   move = 0;
+  levelCounter.innerHTML = level;
+  moveCounter.innerHTML = move;
+
+  winText.classList.remove('winTextVisible');
+  winText.classList.add('winTextInvisible');
+  container.classList.remove('winContainer');
+
   leftWallIndex = 0;
   rightWallIndex = 9;
   topWallIndex = 0;
   bottomWallIndex = 9;
 
-  squares = document.querySelectorAll("[class*='wall']");
+  squaresAll = document.querySelectorAll('.square');
+  squaresAll.forEach((square) => {
+    square.classList.remove(
+      'level2',
+      'level3',
+      'level4',
+      'level5',
+      'level6',
+      'level7',
+      'level8',
+      'finalSquare'
+    );
+  });
+
+  squaresArrows = document.querySelectorAll('.arrow');
 
   squares.forEach((square) => {
-    square.classList.remove("[class*='wall']");
+    square.classList.remove('arrow');
+    square.innerHTML = '';
+  });
+
+  squaresWalls = document.querySelectorAll('.wallGeneric');
+  console.log(squaresWalls);
+
+  squaresWalls.forEach((square) => {
+    square.classList.remove(
+      'wallGeneric',
+      'wall0',
+      'wall1',
+      'wall2',
+      'wall3',
+      'wall4',
+      'wall5',
+      'wall6',
+      'wall7',
+      'wall8'
+    );
   });
 
   setWin();
@@ -55,7 +122,8 @@ function reloadTheGame() {
 
 function playLevelCompleted() {
   levelForAudio = level - 1;
-  audioLevelCompleted.src = 'audio/win' + levelForAudio + '.ogg';
+  fileToFind = 'audio/win' + levelForAudio + '.ogg';
+  audioLevelCompleted.src = fileToFind;
   audioLevelCompleted.play();
 }
 
@@ -126,7 +194,6 @@ function winLevel() {
 
   level += 1;
   levelCounter.innerHTML = level;
-  // This works if we keep the IDs correct!
 
   setWalls(winRow, winCol);
   document.querySelector('.win').classList.remove('win');
@@ -142,18 +209,32 @@ function endOfGame() {
   audioYouWin.play();
   winningSquare.classList.add('finalSquare');
   container.classList.add('winContainer');
+  winText.classList.remove('winTextInvisible');
   winText.classList.add('winTextVisible');
+  winText.innerHTML = 'YOU WIN!!!';
   gameOver = true;
 }
 
 // Event Listener
 container.addEventListener('click', (e) => {
+  if (winText.classList.contains('winTextSoundTextFormat')) {
+    winText.classList.remove('winTextSoundTextFormat');
+    winText.classList.add('winTextFormat');
+  }
+
+  if (winText.classList.contains('winTextVisible') & !gameOver) {
+    winText.classList.remove('winTextVisible');
+    winText.classList.add('winTextInvisible');
+  }
   audioMusic.play();
   if (!gameOver) {
-    move += 1;
-    moveCounter.innerHTML = move;
-
-    console.log(e.target);
+    if (
+      e.target.classList.contains('square') &
+      !e.target.classList.contains('wallGeneric')
+    ) {
+      move += 1;
+      moveCounter.innerHTML = move;
+    }
     if (e.target.classList.contains('win')) {
       winLevel();
     } else if (
@@ -165,6 +246,8 @@ container.addEventListener('click', (e) => {
       e.target.innerHTML = '<p class="arrow">></p>';
       arrowFindTheTreasure(e);
     }
+  } else {
+    reloadTheGame();
   }
 });
 

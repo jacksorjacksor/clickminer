@@ -20,7 +20,8 @@ body {
 }
 
 h1 {
-  margin: 0;
+  margin: 20px 0 0;
+  font-size: 300%;
 }
 
 .scores {
@@ -44,10 +45,17 @@ h1 {
   align-items: center;
 }
 
-.winText {
+.winTextFormat {
   font-size: 250%;
-  visibility: hidden;
   color: gold;
+}
+
+.winTextSoundTextFormat {
+  font-size: 250%;
+  color: black;
+}
+.winTextInvisible {
+  visibility: hidden;
 }
 
 .winTextVisible {
@@ -133,6 +141,10 @@ h1 {
   border: 10px solid gold;
 }
 
+.description {
+  padding: 0 200px;
+}
+
 @media (max-width: 800px), (max-height: 950px) {
   .square {
     height: 40px;
@@ -147,5 +159,19 @@ h1 {
 
   .square:hover:not([class*='wall'], .finalSquare) {
     transform: scale(1);
+  }
+
+  .winTextFormat {
+    font-size: 100%;
+    color: gold;
+  }
+
+  .winTextSoundTextFormat {
+    font-size: 100%;
+    color: black;
+  }
+
+  .description {
+    padding: 0 20px;
   }
 }
