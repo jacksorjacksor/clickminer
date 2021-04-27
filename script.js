@@ -24,17 +24,17 @@ winText.innerHTML = '(music starts when you click a green box)';
 
 // Define Sound Elements
 var audioMusic = document.createElement('audio');
-audioMusic.src = 'audio/music.ogg';
+audioMusic.src = 'audio/music.mp3';
 audioMusic.loop = true;
 
 var audioLevelCompleted = document.createElement('audio');
 
 var audioShovel = document.createElement('audio');
-audioShovel.src = 'audio/shovel.ogg';
+audioShovel.src = 'audio/shovel.mp3';
 audioShovel.volume = 0.2;
 
 var audioYouWin = document.createElement('audio');
-audioYouWin.src = 'audio/youWin.ogg';
+audioYouWin.src = 'audio/youWin.mp3';
 
 function setGameAudioVolume() {
   if (!soundMuted) {
@@ -122,7 +122,7 @@ function reloadTheGame() {
 
 function playLevelCompleted() {
   levelForAudio = level - 1;
-  fileToFind = 'audio/win' + levelForAudio + '.ogg';
+  fileToFind = 'audio/win' + levelForAudio + '.mp3';
   audioLevelCompleted.src = fileToFind;
   audioLevelCompleted.play();
 }
