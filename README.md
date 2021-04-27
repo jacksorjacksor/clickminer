@@ -1,4 +1,4 @@
-# ld48
+# "Click Miner" - Ludum Dare 48
 Here's my entry for Ludum Dare 48 - "Click Miner"
 
 Made in vanilla HTML/CSS/JS
